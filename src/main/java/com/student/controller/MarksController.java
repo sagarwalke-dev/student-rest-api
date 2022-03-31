@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/marks")
-@SecurityRequirement(name = "studentapi")
+//@SecurityRequirement(name = "studentapi")
 @Slf4j
 public class MarksController {
 

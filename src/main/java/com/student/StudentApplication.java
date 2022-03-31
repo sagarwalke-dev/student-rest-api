@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "Student REST API", version = "1.0", description = "Student Information"))
-@SecurityScheme(name = "studentapi", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
+//@SecurityScheme(name = "studentapi", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class StudentApplication {
 
 	public static void main(String[] args) {
