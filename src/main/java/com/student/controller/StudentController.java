@@ -55,6 +55,16 @@ public class StudentController {
 			return Collections.emptyList();
 		}
 	}
+	
+	@PostMapping("/updateStudent")
+	public Response updateStudent(@RequestBody Students student) {
+		try {
+			return studentService.updateById(student);
+		} catch (Exception e) {
+			log.info("Error raised on student controller updateStudent {}", e.getMessage());
+			return null;
+		}
+	}
 
 	@GetMapping("/findById")
 	public Optional<Students> getStudentById(@RequestParam Integer studentId) {
