@@ -5,10 +5,11 @@ import java.util.Optional;
 
 import com.student.entity.Response;
 import com.student.entity.Students;
+import com.student.entity.StudentsRequest;
 
 public interface IStudentService {
 
-	public Response addStudent(Students student);
+	public Response addStudent(StudentsRequest student);
 	
 	public Response updateById(Students student);
 	

@@ -3,6 +3,7 @@ package com.student.service;
 import java.util.List;
 
 import com.student.entity.Marks;
+import com.student.entity.MarksRequest;
 import com.student.entity.Response;
 
 public interface IMarksService {
@@ -11,7 +12,7 @@ public interface IMarksService {
 	
 	public List<Integer> getMarksList(Integer studentId);
 	
-	public Response addMark(Marks marks);
+	public Response addMark(MarksRequest mark);
 	
 public Response deleteById(Integer markId);
 	

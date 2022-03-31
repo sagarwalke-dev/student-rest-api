@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.student.entity.Marks;
+import com.student.entity.MarksRequest;
 import com.student.entity.Response;
 import com.student.entity.Students;
 import com.student.service.IMarksService;
@@ -33,7 +34,7 @@ public class MarksController {
 	IMarksService marksService;
 
 	@PostMapping("/addMarks")
-	public Response addMarks(@RequestBody Marks mark) {
+	public Response addMarks(@RequestBody MarksRequest mark) {
 		try {
 			return marksService .addMark(mark);
 		} catch (Exception e) {

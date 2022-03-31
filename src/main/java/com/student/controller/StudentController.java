@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.student.entity.Response;
 import com.student.entity.Students;
+import com.student.entity.StudentsRequest;
 import com.student.service.IMarksService;
 import com.student.service.IStudentService;
 
@@ -34,7 +35,7 @@ public class StudentController {
 	IMarksService marksService;
 
 	@PostMapping("/addStudent")
-	public Response addStudent(@RequestBody Students student) {
+	public Response addStudent(@RequestBody StudentsRequest student) {
 		try {
 			return studentService.addStudent(student);
 		} catch (Exception e) {
@@ -59,7 +60,7 @@ public class StudentController {
 			return studentService.findById(studentId);
 		} catch (Exception e) {
 			log.info("Error raised on student controller getStudentById {}", e.getMessage());
-			return Optional.of(new Students());
+			return Optional.empty();
 		}
 	}
 	

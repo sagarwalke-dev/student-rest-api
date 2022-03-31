@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mapping.AccessOptions.GetOptions;
 import org.springframework.stereotype.Service;
 
 import com.student.dao.StudentDao;
 import com.student.entity.Response;
 import com.student.entity.Students;
+import com.student.entity.StudentsRequest;
 
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.asm.Advice.OffsetMapping.ForOrigin.Renderer.ForReturnTypeName;
@@ -24,9 +26,10 @@ public class StudentService implements IStudentService {
 	Response response;
 
 	@Override
-	public Response addStudent(Students student) {
+	public Response addStudent(StudentsRequest student) {
 		try {
-			Students result = studentDao.save(student);
+			Students studentEntity=new Students(student.getStudentId(), student.getFirstName(), student.getLastName(), student.getGroupId());
+			Students result = studentDao.save(studentEntity);
 			log.info("Add student Result {}", result);
 
 				response.setStatus(200);
@@ -86,7 +89,7 @@ public class StudentService implements IStudentService {
 
 	@Override
 	public Optional<Students> findById(Integer studentId) {
-		Optional<Students> stud = null;
+		Optional<Students> stud = Optional.empty();
 		try {
 			stud = studentDao.findById(studentId);
 		} catch (Exception e) {
@@ -98,6 +101,7 @@ public class StudentService implements IStudentService {
 	@Override
 	public Integer getStudentCountByTeacher(Integer teacherId) {
 		try {
+			
 			return studentDao.getStudentCountByTeacherId(teacherId);
 		} catch (Exception e) {
 			log.error("error raised getStudentCountByTeacher {}", e.getMessage());

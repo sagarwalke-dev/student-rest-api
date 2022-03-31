@@ -1,5 +1,6 @@
 package com.student.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.student.dao.MarksDao;
 import com.student.entity.Marks;
+import com.student.entity.MarksRequest;
 import com.student.entity.Response;
-import com.student.entity.Students;
-
-import java.util.Collections;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,9 +44,10 @@ public class MarksService implements IMarksService {
 	}
 
 	@Override
-	public Response addMark(Marks marks) {
+	public Response addMark(MarksRequest marks) {
 		try {
-			Marks result = marksDao.save(marks);
+			Marks marksEntity = new Marks(marks.getMarkId(),marks.getMark(), marks.getStudentId(), marks.getSubjectId(), marks.getDate());
+			Marks result = marksDao.save(marksEntity);
 			log.info("Add student Result {}", result);
 
 			response.setStatus(200);
