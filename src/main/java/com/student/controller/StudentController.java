@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController(value = "/student")
 @SecurityRequirement(name = "studentapi")
-@CrossOrigin
 @Slf4j
 public class StudentController {
 
@@ -34,7 +33,7 @@ public class StudentController {
 	@Autowired
 	IMarksService marksService;
 
-	@PostMapping("/add")
+	@PostMapping("/addStudent")
 	public Response addStudent(@RequestBody Students student) {
 		try {
 			return studentService.addStudent(student);
@@ -44,7 +43,7 @@ public class StudentController {
 		return null;
 	}
 
-	@GetMapping("/findAll")
+	@GetMapping("/findAllStudent")
 	public List<Students> getAllStudents() {
 		try {
 			return studentService.findAll();

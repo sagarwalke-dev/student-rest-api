@@ -29,6 +29,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
 
+	 private static final String[] AUTH_WHITELIST = {
+			 "/authenticate",
+	            "/v2/api-docs",
+	            "/swagger-resources",
+	            "/swagger-resources/**",
+	            "/configuration/ui",
+	            "/configuration/security",
+	            "/swagger-ui.html",
+	            "/webjars/**",
+	            "/v3/api-docs/**",
+	            "/swagger-ui/**"
+	    };
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		// configure AuthenticationManager so that it knows from where to load
@@ -48,21 +60,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		// We don't need CSRF for this example
-		httpSecurity.csrf().disable()
-				// dont authenticate this particular request
-				.authorizeRequests()
-				.antMatchers("/authenticate", "/v3/api-docs","/swagger-config#/**", "/configuration/ui", "/swagger-resources/**",
-						"/configuration/security", "/swagger-ui.html/**", "/v3/api-docs/**", "**/swagger-ui/**",
-						"/webjars/**")
-				.permitAll().
-				// all other requests need to be authenticated
+		httpSecurity.csrf().disable().authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll().
 				anyRequest().authenticated().and().
-				// make sure we use stateless session; session won't be used to
 				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 }

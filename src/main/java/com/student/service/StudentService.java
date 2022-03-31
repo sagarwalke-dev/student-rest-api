@@ -28,17 +28,13 @@ public class StudentService implements IStudentService {
 		try {
 			Students result = studentDao.save(student);
 			log.info("Add student Result {}", result);
-			if (result != null) {
+
 				response.setStatus(200);
 				response.setMessage("student record added");
-			} else {
-				response.setStatus(400);
-				response.setMessage("failed to add student record");
-			}
 		} catch (Exception e) {
 			log.error("Error raised in student service {}", e.getMessage());
-			response.setStatus(500);
-			response.setMessage("internal server error");
+			response.setStatus(400);
+			response.setMessage("failed to add student record");
 		}
 		return response;
 	}
@@ -46,11 +42,21 @@ public class StudentService implements IStudentService {
 	@Override
 	public Response updateById(Students student) {
 		try {
-
+			Optional<Students> stud = studentDao.findById(student.getStudentId());
+			if(!stud.isEmpty()) {
+				stud.get().setFirstName(student.getFirstName());
+				stud.get().setLastName(student.getLastName());
+				stud.get().setGroupId(student.getGroupId());
+				student=studentDao.save(stud.get());
+					response.setStatus(200);
+					response.setMessage("student record updated "+student);
+				
+			}
 		} catch (Exception e) {
-
+			response.setStatus(400);
+			response.setMessage("failed to update student record");
 		}
-		return null;
+		return response;
 	}
 
 	@Override
